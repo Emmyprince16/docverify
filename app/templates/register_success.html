@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Signer Registered{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="success-card fade-in-up">
+        <div class="success-icon">✅</div>
+        <h1>Signer Registered</h1>
+        <p><strong>{{ signer.full_name }}</strong> has been added with the reference signature on file.</p>
+        <a href="/register" class="btn btn-secondary">Register Another</a>
+        <a href="/" class="btn btn-primary">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

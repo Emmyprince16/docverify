@@ -216,3 +216,116 @@ body {
     object-fit: contain;
     border-radius: 6px;
 }
+
+.form-page {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.form-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 32px;
+}
+
+.form-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.file-drop {
+    position: relative;
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 28px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.file-drop:hover {
+    border-color: var(--primary);
+    background: var(--surface-hover);
+}
+
+.file-drop input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.btn-full {
+    width: 100%;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.success-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 48px 32px;
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.success-card h1 {
+    margin-bottom: 12px;
+}
+
+.success-card p {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+}
+
+.success-card .btn {
+    margin: 0 6px;
+}
