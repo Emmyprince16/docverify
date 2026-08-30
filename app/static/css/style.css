@@ -384,3 +384,15 @@ body {
 .result-card .btn {
     margin: 24px 6px 0;
 }
+
+.badge-neutral {
+    background: rgba(154, 157, 166, 0.15);
+    color: var(--text-muted);
+}
+
+.result-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 12px;
+    text-align: left;
+}

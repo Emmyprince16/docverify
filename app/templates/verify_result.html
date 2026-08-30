@@ -26,14 +26,20 @@
             {% endif %}
         </div>
 
-        <div class="result-row">
-            <span>Hash match</span>
-            {% if sig_check.hash_match %}
-            <span class="badge badge-pass">Match</span>
-            {% else %}
-            <span class="badge badge-fail">Mismatch</span>
-            {% endif %}
-        </div>
+                <div class="result-row">
+                    <span>Hash match</span>
+                    {% if is_first_upload %}
+                    <span class="badge badge-neutral">First upload</span>
+                    {% elif sig_check.hash_match %}
+                    <span class="badge badge-pass">Match</span>
+                    {% else %}
+                    <span class="badge badge-fail">Mismatch</span>
+                    {% endif %}
+                </div>
+                {% if is_first_upload %}
+                <p class="result-note">This is the first time "{{ document.filename }}" has been uploaded, so there's no prior version
+                    to compare against yet.</p>
+                {% endif %}
 
         <a href="/verify" class="btn btn-secondary">Verify Another</a>
         <a href="/" class="btn btn-primary">Back to Home</a>

@@ -1,8 +1,7 @@
 """
 Routes for uploading a document and running the digital signature
-(PKI) check on it. This is the first of the three verification
-modules — checks whether the document has a valid embedded digital
-signature and whether its hash matches (i.e. hasn't been altered).
+(PKI) check on it, plus a hash comparison against any previous
+upload with the same filename.
 """
 
 import os
@@ -42,10 +41,24 @@ def upload_document(
     with open(saved_path, "wb") as buffer:
         shutil.copyfileobj(document_file.file, buffer)
 
-    # Compute SHA-256 hash of the uploaded file — this is what
-    # future tamper checks can compare against to detect edits.
     with open(saved_path, "rb") as f:
         file_hash = hashlib.sha256(f.read()).hexdigest()
+
+    # Check if a document with this filename has been seen before —
+    # this is what lets us detect if it's been modified since then.
+    previous_document = (
+        db.query(Document)
+        .filter(Document.filename == document_file.filename)
+        .order_by(Document.uploaded_at.desc())
+        .first()
+    )
+
+    if previous_document:
+        hash_match = previous_document.file_hash == file_hash
+        is_first_upload = False
+    else:
+        hash_match = True
+        is_first_upload = True
 
     new_document = Document(
         signer_id=signer_id,
@@ -57,14 +70,13 @@ def upload_document(
     db.commit()
     db.refresh(new_document)
 
-    # Run the digital signature (PKI) check
     result = check_digital_signature(saved_path)
 
     sig_check = DigitalSigCheck(
         document_id=new_document.id,
         has_digital_signature=result["has_digital_signature"],
         cert_valid=result["cert_valid"],
-        hash_match=result["hash_match"],
+        hash_match=hash_match,
         signer_common_name=result["signer_common_name"],
     )
     db.add(sig_check)
@@ -73,5 +85,9 @@ def upload_document(
     return templates.TemplateResponse(
         request,
         "verify_result.html",
-        {"document": new_document, "sig_check": sig_check},
+        {
+            "document": new_document,
+            "sig_check": sig_check,
+            "is_first_upload": is_first_upload,
+        },
     )
