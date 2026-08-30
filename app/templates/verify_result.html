@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Verification Result{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="result-card fade-in-up">
+        <h1>Digital Signature Check</h1>
+        <p class="result-filename">{{ document.filename }}</p>
+
+        <div class="result-row">
+            <span>Has digital signature</span>
+            {% if sig_check.has_digital_signature %}
+            <span class="badge badge-pass">Yes</span>
+            {% else %}
+            <span class="badge badge-fail">No</span>
+            {% endif %}
+        </div>
+
+        <div class="result-row">
+            <span>Certificate valid</span>
+            {% if sig_check.cert_valid %}
+            <span class="badge badge-pass">Valid</span>
+            {% else %}
+            <span class="badge badge-fail">N/A</span>
+            {% endif %}
+        </div>
+
+        <div class="result-row">
+            <span>Hash match</span>
+            {% if sig_check.hash_match %}
+            <span class="badge badge-pass">Match</span>
+            {% else %}
+            <span class="badge badge-fail">Mismatch</span>
+            {% endif %}
+        </div>
+
+        <a href="/verify" class="btn btn-secondary">Verify Another</a>
+        <a href="/" class="btn btn-primary">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

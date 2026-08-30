@@ -329,3 +329,58 @@ body {
 .success-card .btn {
     margin: 0 6px;
 }
+
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95rem;
+}
+
+.result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 32px;
+    text-align: center;
+}
+
+.result-filename {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-pass {
+    background: rgba(34, 211, 168, 0.15);
+    color: var(--accent);
+}
+
+.badge-fail {
+    background: rgba(255, 99, 99, 0.15);
+    color: #ff6363;
+}
+
+.result-card .btn {
+    margin: 24px 6px 0;
+}

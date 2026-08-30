@@ -7,13 +7,11 @@ window.addEventListener('scroll', () => {
     }
 });
 
-const fileInput = document.getElementById('reference_signature');
-const fileDropText = document.getElementById('fileDropText');
-
-if (fileInput) {
-    fileInput.addEventListener('change', () => {
-        if (fileInput.files.length > 0) {
-            fileDropText.textContent = fileInput.files[0].name;
+document.querySelectorAll('.file-drop input[type="file"]').forEach((input) => {
+    input.addEventListener('change', () => {
+        if (input.files.length > 0) {
+            const label = input.previousElementSibling;
+            label.textContent = input.files[0].name;
         }
     });
-}
+});

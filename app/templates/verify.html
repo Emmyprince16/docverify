@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Verify a Document{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <h1 class="form-title fade-in-up">Verify a Document</h1>
+    <p class="form-subtitle fade-in-up delay-1">Upload a document to run the digital signature check.</p>
+
+    <form class="form-card fade-in-up delay-2" action="/verify" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="signer_id">Signer</label>
+            <select id="signer_id" name="signer_id" required>
+                <option value="" disabled selected>Select the claimed signer</option>
+                {% for signer in signers %}
+                <option value="{{ signer.id }}">{{ signer.full_name }} ({{ signer.email }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="document_file">Document</label>
+            <div class="file-drop" id="fileDrop">
+                <span id="fileDropText">Click to choose a document, or drag one here</span>
+                <input type="file" id="document_file" name="document_file" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">Run Verification</button>
+    </form>
+</div>
+{% endblock %}
