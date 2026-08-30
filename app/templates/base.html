@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DocuVerify{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="logo">
+                <img src="/static/fpi-logo.png" alt="Federal Polytechnic Ilaro logo" class="logo-img">
+                <span class="logo-text">
+                    DocuVerify
+                    <span class="logo-subtitle">Federal Polytechnic, Ilaro</span>
+                </span>
+            </a>
+
+        </div>
+    </nav>
+
+    <main class="page-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>DocuVerify &copy; 2026 — The Federal Polytechnic, Ilaro</p>
+        <p class="footer-sub">Department of Computer Science — National Diploma (ND) Capstone Project</p>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+
+</html>

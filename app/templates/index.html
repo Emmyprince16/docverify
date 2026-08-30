@@ -1,14 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>DocuVerify</title>
-</head>
+{% block title %}DocuVerify — Home{% endblock %}
 
-<body>
-    <h1>DocuVerify</h1>
-    <p>Automated Signature & Document Verification System</p>
-</body>
+{% block content %}
+<section class="hero">
+    <h1 class="hero-title fade-in-up">Automated <span class="highlight">Signature</span> &amp; Document Verification
+    </h1>
+    <p class="hero-subtitle fade-in-up delay-1">Combining digital signatures, handwriting analysis, and document
+        forensics into one trust score.</p>
+    <div class="hero-actions fade-in-up delay-2">
+        <a href="#" class="btn btn-primary">Verify a Document</a>
+        <a href="#" class="btn btn-secondary">Register as Signer</a>
+    </div>
+</section>
 
-</html>
+<section class="features">
+    <div class="feature-card fade-in-up delay-1">
+        <div class="feature-icon">🔐</div>
+        <h3>Digital Signature</h3>
+        <p>Validates PKI certificates and cryptographic hashes to confirm authenticity.</p>
+    </div>
+    <div class="feature-card fade-in-up delay-2">
+        <div class="feature-icon">✍️</div>
+        <h3>Signature Matching</h3>
+        <p>Uses machine learning to compare handwritten signatures against a reference.</p>
+    </div>
+    <div class="feature-card fade-in-up delay-3">
+        <div class="feature-icon">🔍</div>
+        <h3>Tamper Detection</h3>
+        <p>Scans documents for signs of forgery, editing, or metadata inconsistencies.</p>
+    </div>
+</section>
+{% endblock %}
