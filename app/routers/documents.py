@@ -1,7 +1,7 @@
 """
-Routes for uploading a document and running the digital signature
-(PKI) check on it, plus a hash comparison against any previous
-upload with the same filename.
+Routes for uploading a document and running verification checks on it:
+digital signature (PKI), hash comparison against prior uploads, and
+tamper detection.
 """
 
 import os
@@ -13,8 +13,9 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models.models import Signer, Document, DigitalSigCheck
+from app.models.models import Signer, Document, DigitalSigCheck, TamperCheck
 from app.services.digital_signature import check_digital_signature
+from app.services.tamper_detection import check_tamper
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -44,8 +45,6 @@ def upload_document(
     with open(saved_path, "rb") as f:
         file_hash = hashlib.sha256(f.read()).hexdigest()
 
-    # Check if a document with this filename has been seen before —
-    # this is what lets us detect if it's been modified since then.
     previous_document = (
         db.query(Document)
         .filter(Document.filename == document_file.filename)
@@ -82,12 +81,23 @@ def upload_document(
     db.add(sig_check)
     db.commit()
 
+    tamper_result = check_tamper(saved_path)
+
+    tamper_check = TamperCheck(
+        document_id=new_document.id,
+        tamper_score=tamper_result["tamper_score"],
+        findings="|".join(tamper_result["findings"]),
+    )
+    db.add(tamper_check)
+    db.commit()
+
     return templates.TemplateResponse(
         request,
         "verify_result.html",
         {
             "document": new_document,
             "sig_check": sig_check,
+            "tamper_check": tamper_check,
             "is_first_upload": is_first_upload,
         },
     )

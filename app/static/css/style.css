@@ -396,3 +396,27 @@ body {
     margin-top: 12px;
     text-align: left;
 }
+
+.result-section-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin: 28px 0 12px;
+    text-align: left;
+}
+
+.badge-warn {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+}
+
+.findings-list {
+    text-align: left;
+    padding-left: 20px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.findings-list li {
+    margin-bottom: 6px;
+}

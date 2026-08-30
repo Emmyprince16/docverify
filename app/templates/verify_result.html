@@ -41,8 +41,27 @@
                     to compare against yet.</p>
                 {% endif %}
 
-        <a href="/verify" class="btn btn-secondary">Verify Another</a>
-        <a href="/" class="btn btn-primary">Back to Home</a>
+                <div class="result-section-title">Tamper Detection</div>
+                
+                <div class="result-row">
+                    <span>Tamper score</span>
+                    {% if tamper_check.tamper_score >= 0.5 %}
+                    <span class="badge badge-fail">{{ "%.0f"|format(tamper_check.tamper_score * 100) }}%</span>
+                    {% elif tamper_check.tamper_score > 0 %}
+                    <span class="badge badge-warn">{{ "%.0f"|format(tamper_check.tamper_score * 100) }}%</span>
+                    {% else %}
+                    <span class="badge badge-pass">Clean</span>
+                    {% endif %}
+                </div>
+                
+                <ul class="findings-list">
+                    {% for finding in tamper_check.findings.split("|") %}
+                    <li>{{ finding }}</li>
+                    {% endfor %}
+                </ul>
+                
+                <a href="/verify" class="btn btn-secondary">Verify Another</a>
+                <a href="/" class="btn btn-primary">Back to Home</a>
     </div>
 </div>
 {% endblock %}
