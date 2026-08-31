@@ -1,21 +1,23 @@
 """
 Routes for uploading a document and running verification checks on it:
-digital signature (PKI), hash comparison against prior uploads, and
-tamper detection.
+digital signature (PKI), hash comparison against prior uploads,
+tamper detection, and signature matching.
 """
 
 import os
 import hashlib
 import shutil
+from typing import Optional
 
 from fastapi import APIRouter, Request, Form, UploadFile, File, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.models.models import Signer, Document, DigitalSigCheck, TamperCheck
+from app.models.models import Signer, Document, DigitalSigCheck, TamperCheck, SignatureMatch
 from app.services.digital_signature import check_digital_signature
 from app.services.tamper_detection import check_tamper
+from app.ml.inference import compare_signatures
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
@@ -34,6 +36,7 @@ def upload_document(
     request: Request,
     signer_id: str = Form(...),
     document_file: UploadFile = File(...),
+    signature_image: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db),
 ):
     os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -91,6 +94,28 @@ def upload_document(
     db.add(tamper_check)
     db.commit()
 
+    # Run the signature matching check against the claimed signer's
+    # reference signature, using the separately uploaded signature image.
+    signer = db.query(Signer).filter(Signer.id == signer_id).first()
+    
+
+    signature_match = None
+    if signature_image and signature_image.filename and signer and signer.reference_signature_path:
+        signature_save_path = os.path.join(UPLOAD_DIR, f"sig_{signature_image.filename}")
+        with open(signature_save_path, "wb") as buffer:
+            shutil.copyfileobj(signature_image.file, buffer)
+
+        match_result = compare_signatures(signer.reference_signature_path, signature_save_path)
+
+        signature_match = SignatureMatch(
+            document_id=new_document.id,
+            similarity_score=match_result["similarity_score"],
+            match_result=match_result["match_result"],
+            threshold_used=match_result["threshold_used"],
+        )
+        db.add(signature_match)
+        db.commit()
+
     return templates.TemplateResponse(
         request,
         "verify_result.html",
@@ -98,6 +123,7 @@ def upload_document(
             "document": new_document,
             "sig_check": sig_check,
             "tamper_check": tamper_check,
+            "signature_match": signature_match,
             "is_first_upload": is_first_upload,
         },
     )

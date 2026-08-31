@@ -30,11 +30,15 @@ def get_signer_folders(dataset_dir):
     )
 
 
-def build_pairs(dataset_dir, signer_ids):
+def build_pairs(dataset_dir, signer_ids, genuine_pairs_per_signer=10, forged_pairs_per_original=2):
     """
-    For each signer, creates:
+    For each signer, creates a capped number of:
     - genuine-genuine pairs (label 1.0, should be judged similar)
     - genuine-forged pairs (label 0.0, should be judged dissimilar)
+
+    Capping (rather than using every possible combination) keeps
+    training time manageable on a standard laptop CPU, while still
+    giving the model a solid, varied set of examples per signer.
     """
     pairs = []
 
@@ -46,12 +50,19 @@ def build_pairs(dataset_dir, signer_ids):
         original_paths = [os.path.join(signer_path, f) for f in originals]
         forged_paths = [os.path.join(signer_path, f) for f in forgeries]
 
-        for i in range(len(original_paths)):
-            for j in range(i + 1, len(original_paths)):
-                pairs.append((original_paths[i], original_paths[j], 1.0))
+        all_genuine_combinations = [
+            (original_paths[i], original_paths[j])
+            for i in range(len(original_paths))
+            for j in range(i + 1, len(original_paths))
+        ]
+        sampled_genuine = random.sample(
+            all_genuine_combinations, min(genuine_pairs_per_signer, len(all_genuine_combinations))
+        )
+        for img1, img2 in sampled_genuine:
+            pairs.append((img1, img2, 1.0))
 
         for orig in original_paths:
-            for forged in random.sample(forged_paths, min(4, len(forged_paths))):
+            for forged in random.sample(forged_paths, min(forged_pairs_per_original, len(forged_paths))):
                 pairs.append((orig, forged, 0.0))
 
     random.shuffle(pairs)

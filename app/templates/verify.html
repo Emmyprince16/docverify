@@ -17,7 +17,6 @@
                 {% endfor %}
             </select>
         </div>
-
         <div class="form-group">
             <label for="document_file">Document</label>
             <div class="file-drop" id="fileDrop">
@@ -25,8 +24,16 @@
                 <input type="file" id="document_file" name="document_file" required>
             </div>
         </div>
-
-        <button type="submit" class="btn btn-primary btn-full">Run Verification</button>
-    </form>
+        
+            <div class="form-group">
+                <label for="signature_image">Signature Image (optional — for signature matching)</label>
+                <div class="file-drop" id="fileDrop2">
+                    <span id="fileDropText2">Click to choose a signature image, or drag one here</span>
+                    <input type="file" id="signature_image" name="signature_image" accept="image/*">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-full">Run Verification</button>
+            </form>
 </div>
 {% endblock %}

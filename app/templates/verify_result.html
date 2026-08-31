@@ -41,6 +41,28 @@
                     to compare against yet.</p>
                 {% endif %}
 
+                        {% if signature_match %}
+                        <div class="result-section-title">Signature Matching</div>
+                        
+                        <div class="result-row">
+                            <span>Similarity score</span>
+                            <span class="badge {% if signature_match.match_result %}badge-pass{% else %}badge-fail{% endif %}">
+                                {{ "%.0f"|format(signature_match.similarity_score * 100) }}%
+                            </span>
+                        </div>
+                        
+                        <div class="result-row">
+                            <span>Match result</span>
+                            {% if signature_match.match_result %}
+                            <span class="badge badge-pass">Genuine</span>
+                            {% else %}
+                            <span class="badge badge-fail">Not a match</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="result-section-title">Tamper Detection</div>
+                        
                 <div class="result-section-title">Tamper Detection</div>
                 
                 <div class="result-row">

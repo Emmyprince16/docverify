@@ -16,7 +16,7 @@ from model import SiameseNetwork, ContrastiveLoss
 
 DATASET_DIR = "dataset/CEDAR"
 MODEL_OUTPUT_PATH = "../app/ml/signature_model.pth"
-EPOCHS = 10
+EPOCHS = 5
 BATCH_SIZE = 16
 LEARNING_RATE = 0.0005
 
