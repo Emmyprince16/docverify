@@ -5,8 +5,15 @@
 {% block content %}
 <div class="form-page">
     <div class="result-card fade-in-up">
-        <h1>Digital Signature Check</h1>
+        <h1>Verification Result</h1>
         <p class="result-filename">{{ document.filename }}</p>
+
+        <div class="verdict-banner verdict-{{ verification_report.verdict }}">
+            <span class="verdict-label">{{ verification_report.verdict|upper }}</span>
+            <span class="verdict-score">{{ "%.0f"|format(verification_report.trust_score * 100) }}% Trust Score</span>
+        </div>
+
+        <div class="result-section-title">Digital Signature Check</div>
 
         <div class="result-row">
             <span>Has digital signature</span>
@@ -62,7 +69,7 @@
                         {% endif %}
                         
                         <div class="result-section-title">Tamper Detection</div>
-                        
+
                 <div class="result-section-title">Tamper Detection</div>
                 
                 <div class="result-row">

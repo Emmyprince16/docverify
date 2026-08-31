@@ -12,9 +12,9 @@ from typing import Optional
 from fastapi import APIRouter, Request, Form, UploadFile, File, Depends
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-
+from app.models.models import Signer, Document, DigitalSigCheck, TamperCheck, SignatureMatch, VerificationReport
+from app.services.verification_engine import compute_trust_score
 from app.database import get_db
-from app.models.models import Signer, Document, DigitalSigCheck, TamperCheck, SignatureMatch
 from app.services.digital_signature import check_digital_signature
 from app.services.tamper_detection import check_tamper
 from app.ml.inference import compare_signatures
@@ -115,6 +115,17 @@ def upload_document(
         )
         db.add(signature_match)
         db.commit()
+    trust_score, verdict = compute_trust_score(
+        tamper_check, signature_match, hash_match, is_first_upload
+    )
+
+    verification_report = VerificationReport(
+        document_id=new_document.id,
+        trust_score=trust_score,
+        verdict=verdict,
+    )
+    db.add(verification_report)
+    db.commit()
 
     return templates.TemplateResponse(
         request,
@@ -125,5 +136,6 @@ def upload_document(
             "tamper_check": tamper_check,
             "signature_match": signature_match,
             "is_first_upload": is_first_upload,
+            "verification_report": verification_report,
         },
     )

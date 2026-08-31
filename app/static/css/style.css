@@ -420,3 +420,41 @@ body {
 .findings-list li {
     margin-bottom: 6px;
 }
+
+.verdict-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-radius: 10px;
+    margin-bottom: 28px;
+}
+
+.verdict-label {
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+}
+
+.verdict-score {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.verdict-verified {
+    background: rgba(34, 211, 168, 0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
+.verdict-suspicious {
+    background: rgba(255, 193, 7, 0.15);
+    border: 1px solid #ffc107;
+    color: #ffc107;
+}
+
+.verdict-rejected {
+    background: rgba(255, 99, 99, 0.15);
+    border: 1px solid #ff6363;
+    color: #ff6363;
+}
