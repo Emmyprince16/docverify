@@ -5,8 +5,12 @@
 {% block content %}
 <div class="form-page">
     <h1 class="form-title fade-in-up">Register a Signer</h1>
-    <p class="form-subtitle fade-in-up delay-1">Add a signer and upload their reference signature for future
-        verification.</p>
+        <p class="form-subtitle fade-in-up delay-1">Add a signer and upload their reference signature for future verification.
+        </p>
+        
+        {% if error %}
+        <div class="form-error">{{ error }}</div>
+        {% endif %}
 
     <form class="form-card fade-in-up delay-2" action="/register" method="post" enctype="multipart/form-data">
         <div class="form-group">

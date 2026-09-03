@@ -33,6 +33,17 @@ def register_signer(
     reference_signature: UploadFile = File(...),
     db: Session = Depends(get_db),
 ):
+    existing_signer = db.query(Signer).filter(Signer.email == email).first()
+    if existing_signer:
+        return templates.TemplateResponse(
+            request,
+            "register.html",
+            {
+                "error": f"A signer with the email '{email}' is already registered. "
+                         "Please use a different email address."
+            },
+        )
+
     os.makedirs(REFERENCE_DIR, exist_ok=True)
 
     file_extension = reference_signature.filename.split(".")[-1]

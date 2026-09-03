@@ -30,6 +30,14 @@ def show_upload_form(request: Request, db: Session = Depends(get_db)):
     signers = db.query(Signer).all()
     return templates.TemplateResponse(request, "verify.html", {"signers": signers})
 
+@router.get("/history")
+def show_history(request: Request, db: Session = Depends(get_db)):
+    documents = (
+        db.query(Document)
+        .order_by(Document.uploaded_at.desc())
+        .all()
+    )
+    return templates.TemplateResponse(request, "history.html", {"documents": documents})
 
 @router.post("/verify")
 def upload_document(

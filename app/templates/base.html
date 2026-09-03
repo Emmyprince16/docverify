@@ -8,21 +8,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="/static/fpi-logo.png" type="image/png">
 </head>
 
 <body>
-    <nav class="navbar" id="navbar">
-        <div class="navbar-inner">
-            <a href="/" class="logo">
-                <img src="/static/fpi-logo.png" alt="Federal Polytechnic Ilaro logo" class="logo-img">
-                <span class="logo-text">
-                    DocuVerify
-                    <span class="logo-subtitle">Federal Polytechnic, Ilaro</span>
-                </span>
-            </a>
+        <nav class="navbar" id="navbar">
+            <div class="navbar-inner">
+                <a href="/" class="logo">
+                    <img src="/static/fpi-logo.png" alt="Federal Polytechnic Ilaro logo" class="logo-img">
+                    <span class="logo-text">
+                        DocuVerify
+                        <span class="logo-subtitle">Federal Polytechnic, Ilaro</span>
+                    </span>
+                </a>
+                <div class="nav-links">
+                    <a href="/">Home</a>
+                    <a href="/register">Register</a>
+                    <a href="/verify">Verify</a>
+                    <a href="/history">History</a>
+                </div>
+            </div>
+        </nav>
 
-        </div>
-    </nav>
 
     <main class="page-content">
         {% block content %}{% endblock %}

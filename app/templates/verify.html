@@ -7,6 +7,12 @@
     <h1 class="form-title fade-in-up">Verify a Document</h1>
     <p class="form-subtitle fade-in-up delay-1">Upload a document to run the digital signature check.</p>
 
+    {% if not signers %}
+    <div class="form-card fade-in-up delay-2 empty-state">
+        <p>No signers are registered yet. You need to register at least one signer before you can verify a document.</p>
+        <a href="/register" class="btn btn-primary">Register a Signer</a>
+    </div>
+    {% else %}
     <form class="form-card fade-in-up delay-2" action="/verify" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="signer_id">Signer</label>
@@ -17,6 +23,7 @@
                 {% endfor %}
             </select>
         </div>
+
         <div class="form-group">
             <label for="document_file">Document</label>
             <div class="file-drop" id="fileDrop">
@@ -33,7 +40,8 @@
                 </div>
             </div>
             
-            <button type="submit" class="btn btn-primary btn-full">Run Verification</button>
-            </form>
-</div>
-{% endblock %}
+                    <button type="submit" class="btn btn-primary btn-full">Run Verification</button>
+                    </form>
+                    {% endif %}
+                    </div>
+                    {% endblock %}

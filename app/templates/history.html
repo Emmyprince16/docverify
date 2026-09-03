@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Verification History{% endblock %}
+
+{% block content %}
+<h1 class="form-title fade-in-up">Verification History</h1>
+<p class="form-subtitle fade-in-up delay-1">All documents that have been submitted for verification.</p>
+
+{% if not documents %}
+<div class="form-card empty-state fade-in-up delay-2">
+    <p>No documents have been verified yet.</p>
+    <a href="/verify" class="btn btn-primary">Verify a Document</a>
+</div>
+{% else %}
+<div class="history-list fade-in-up delay-2">
+    {% for document in documents %}
+    <div class="history-row">
+        <div class="history-main">
+            <span class="history-filename">{{ document.filename }}</span>
+            <span class="history-signer">{{ document.signer.full_name }}</span>
+        </div>
+        <div class="history-meta">
+            {% if document.report %}
+            <span
+                class="badge badge-{{ 'pass' if document.report.verdict == 'verified' else ('warn' if document.report.verdict == 'suspicious' else 'fail') }}">
+                {{ document.report.verdict|upper }}
+            </span>
+            <span class="history-score">{{ "%.0f"|format(document.report.trust_score * 100) }}%</span>
+            {% else %}
+            <span class="badge badge-neutral">No report</span>
+            {% endif %}
+            <span class="history-date">{{ document.uploaded_at.strftime("%d %b %Y, %H:%M") }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

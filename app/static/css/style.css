@@ -458,3 +458,92 @@ body {
     border: 1px solid #ff6363;
     color: #ff6363;
 }
+
+.navbar-inner {
+    justify-content: space-between;
+}
+
+.nav-links {
+    display: flex;
+    gap: 24px;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: var(--text);
+}
+
+.form-error {
+    background: rgba(255, 99, 99, 0.15);
+    border: 1px solid #ff6363;
+    color: #ff6363;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.empty-state p {
+    margin-bottom: 20px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.history-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.history-filename {
+    font-weight: 600;
+}
+
+.history-signer {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.history-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.history-score {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.history-date {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
